@@ -1,10 +1,14 @@
-import React from 'react';
-import './Button.scss'
-const Button = ({children,signInWithGoogle,...rest}) => {
-    return ( 
-        <button className={`${signInWithGoogle ? "google" : "" } button`} {...rest}>
-            {children}
-        </button>
-     );
-}
+import React from "react";
+import "./Button.scss";
+const Button = ({ children, signInWithGoogle,inverted, ...rest }) => {
+  return (
+    <button
+      className={`${signInWithGoogle ? "google" : ""} 
+        ${inverted ? "inverted" : ""} button`}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+};
 export default Button;
