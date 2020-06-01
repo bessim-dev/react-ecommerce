@@ -26,7 +26,7 @@ const CollectionItem = ({ item, ADD_ITEM }) => {
   );
 };
 const mapDispatchToProps = (dispatch) => ({
-  ADD_ITEM : (item) => dispatch(ADD_ITEM(item))
+  ADD_ITEM : (item) => dispatch(ADD_ITEM(item)),
 });
 
 export default connect(null, mapDispatchToProps)(CollectionItem);
