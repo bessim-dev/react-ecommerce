@@ -1,16 +1,22 @@
 import React from "react";
 import "./app.css";
+
 import Home from "./Pages/Home/Home";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Shop from "./Pages/Shop/Shop";
-import Header from "./Component/Header/Header";
 import Auth from "./Pages/Auth/Auth";
-import { auth, createUserProfileDocument } from "./Component/FireBase/FireBase";
+import Shop from "./Pages/Shop/Shop";
+import  CheckOut from "./Pages/checkOut/checkOut";
+
+import { Route, Switch, Redirect } from "react-router-dom";
+import Header from "./Component/Header/Header";
+
 import { connect } from "react-redux";
 import { setCurrentUser } from "./Component/Redux/User/UserAction";
 import {selectCurrentUser} from "./Component/Redux/User/userSelector";
+
 import { createStructuredSelector } from "reselect";
-import  CheckOut from "./Pages/checkOut/checkOut";
+
+import { auth, createUserProfileDocument } from "./Component/FireBase/FireBase";
+
 class App extends React.Component {
   unSubscribeFromAuth = null;
   componentDidMount() {
@@ -38,7 +44,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/shop" component={Shop} />
+          <Route path="/shop" component={Shop} />
           <Route
             exact
             path="/auth"
