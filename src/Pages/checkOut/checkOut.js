@@ -1,21 +1,29 @@
 import React from "react";
-import "./checkOut.scss";
+
 import { createStructuredSelector } from "reselect";
 import {} from "../../Component/Redux/User/userSelector";
 import { connect } from "react-redux";
 import { selectCartTotal, selectCartItems } from "../../Component/Redux/cart/cartSelector";
 import CheckOutItem from "../../Component/checkOutItem/checkOutItem";
+import Stripe from "../../Component/stripe/stripe";
+import {
+  CheckoutPageContainer,
+  CheckoutHeaderContainer,
+  HeaderBlockContainer,
+  TotalContainer,
+  WarningContainer
+} from './checkout.styles';
 
 const CheckOut = ({ cartTotal,cartItems }) => {
   return (
-    <div className="checkout-page">
-      <div className="checkout-header">
-        <span className="header-block">product</span>
-        <span className="header-block">description</span>
-        <span className="header-block">quantity</span>
-        <span className="header-block">price</span>
-        <span className="header-block">remove</span>
-      </div>
+    <CheckoutPageContainer>
+      <CheckoutHeaderContainer>
+        <HeaderBlockContainer>product</HeaderBlockContainer>
+        <HeaderBlockContainer>description</HeaderBlockContainer>
+        <HeaderBlockContainer>quantity</HeaderBlockContainer>
+        <HeaderBlockContainer>price</HeaderBlockContainer>
+        <HeaderBlockContainer>remove</HeaderBlockContainer>
+      </CheckoutHeaderContainer>
       {
         cartItems.map(cartItem => (
         <CheckOutItem key={cartItem.id} item = {cartItem}/>
@@ -23,8 +31,14 @@ const CheckOut = ({ cartTotal,cartItems }) => {
         )
       }
       
-      <div className="total">total: ${cartTotal}</div>
-    </div>
+      <TotalContainer>total: ${cartTotal}</TotalContainer>
+      <WarningContainer>
+        *please use the fllowing test credit card for payment*
+        <br/>
+        4242 4242 4242 4242 - Exp:01/20 - CVV:123
+      </WarningContainer>
+      <Stripe price={`$${cartTotal}`}/>
+    </CheckoutPageContainer>
   );
 };
 const mapStateToProps = createStructuredSelector({

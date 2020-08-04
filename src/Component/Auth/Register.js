@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "../Button/Button";
 import FormInput from "../FormInput/FormInput";
-import "./Register.scss";
 import { createUserProfileDocument, auth } from "../FireBase/FireBase";
+import { ContainerComponent } from "./Auth.styles";
 const intialState = {
   name: "",
   last_name: "",
@@ -39,7 +39,7 @@ class Register extends React.Component {
   };
   render() {
     return (
-      <div className="register">
+      <ContainerComponent>
         <h2>I don't have an account</h2>
         <span>Register Now!</span>
         <form onSubmit={() => this.hundleSubmit}>
@@ -90,7 +90,7 @@ class Register extends React.Component {
           />
           <Button type="submit" onClick={this.hundleSubmit}>Register</Button>
         </form>
-      </div>
+      </ContainerComponent>
     );
   }
 }

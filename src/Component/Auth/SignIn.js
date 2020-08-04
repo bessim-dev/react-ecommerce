@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "../Button/Button";
 import FormInput from "../FormInput/FormInput";
-import './SignIn.scss'
 import { signInWithGoogle, auth } from "../FireBase/FireBase";
+import { ContainerComponent, ButtonsComponent } from "./Auth.styles";
 const intialState = {
     email:'',
     password:'',
@@ -29,7 +29,7 @@ class SignIn extends React.Component {
     }
   render() {
     return (
-      <div className="SignIn">
+      <ContainerComponent>
         <h2>I have an account</h2>
         <span>Sign in with your e-mail and password</span>
         <form onSubmit={()=>this.hundleSubmit}>
@@ -51,12 +51,12 @@ class SignIn extends React.Component {
             handleChange={this.hundleChange}
             required
           />
-            <div className="buttons">
+            <ButtonsComponent>
               <Button type="submit">SignIn</Button>
               <Button type="button" onClick={signInWithGoogle} signInWithGoogle>SignIn with Google</Button>
-            </div>
+            </ButtonsComponent>
         </form>
-      </div>
+      </ContainerComponent>
     );
   }
 }
