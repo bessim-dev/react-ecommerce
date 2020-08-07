@@ -1,14 +1,14 @@
 import { createSelector } from "reselect";
 
 const selectShop = (state) => state.shop;
-const selectShopData = createSelector([selectShop], (shop) => shop.SHOP_DATA);
+const selectShopData = createSelector([selectShop], (shop) => shop.collections);
 export const selectCollectionForPreview = createSelector(
   [selectShopData],
-  SHOP_DATA => Object.keys(SHOP_DATA).map(keys => SHOP_DATA[keys])
-)
+  (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
+);
 export const selectCollection = (collectionUrlParam) =>
-  createSelector(
-    [selectShopData],
-    (SHOP_DATA) => SHOP_DATA[collectionUrlParam]
+  createSelector([selectShopData], (collections) =>
+    collections ? collections[collectionUrlParam] : null
   );
 export default selectShopData;
