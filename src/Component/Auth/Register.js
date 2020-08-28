@@ -1,55 +1,43 @@
-import React from "react";
+import React,{useState} from "react";
 import Button from "../Button/Button";
 import FormInput from "../FormInput/FormInput";
-import { createUserProfileDocument, auth } from "../FireBase/FireBase";
 import { ContainerComponent } from "./Auth.styles";
-const intialState = {
+import {connect} from 'react-redux';
+import { SignUpStart } from "../Redux/User/UserAction";
+const initialState = {
   name: "",
   last_name: "",
   email: "",
   password: "",
   passwordC: "",
 };
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = intialState;
-  }
-  hundleSubmit = async (e) => {
+const Register = ({signUpStart}) => {
+  const [userCredentials, setCredentials] = useState(initialState)
+  const { name, email, password, passwordC, last_name } = userCredentials;
+  const hundleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password, passwordC, last_name } = this.state;
-    console.log('state')
     if (password !== passwordC) {
       alert("password does not match");
       return;
-    } else {
-      try {
-        const user = await auth.createUserWithEmailAndPassword(email, password);
-        await createUserProfileDocument(user,{name,last_name});
-        this.setState(intialState);
-        console.log(user)
-      } catch (error) {
-        console.log("error creating the user",error)
-      }
-    }
+    } 
+    signUpStart(userCredentials)
   };
-  hundleChange = (e) => {
+  const hundleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setCredentials({ ...userCredentials, [name]: value });
   };
-  render() {
     return (
       <ContainerComponent>
         <h2>I don't have an account</h2>
         <span>Register Now!</span>
-        <form onSubmit={() => this.hundleSubmit}>
+        <form onSubmit={() => hundleSubmit}>
           <FormInput
             type="text"
             id="name"
             name="name"
             label="Name:"
-            value={this.state.name}
-            handleChange={this.hundleChange}
+            value={name}
+            handleChange={hundleChange}
             required
           />
           <FormInput
@@ -57,8 +45,8 @@ class Register extends React.Component {
             id="last_name"
             name="last_name"
             label="Last Name:"
-            value={this.state.last_name}
-            handleChange={this.hundleChange}
+            value={last_name}
+            handleChange={hundleChange}
             required
           />
           <FormInput
@@ -66,8 +54,8 @@ class Register extends React.Component {
             id="email"
             name="email"
             label="Email:"
-            value={this.state.email}
-            handleChange={this.hundleChange}
+            value={email}
+            handleChange={hundleChange}
             required
           />
           <FormInput
@@ -75,8 +63,8 @@ class Register extends React.Component {
             id="password"
             name="password"
             label="Password:"
-            value={this.state.password}
-            handleChange={this.hundleChange}
+            value={password}
+            handleChange={hundleChange}
             required
           />
           <FormInput
@@ -84,15 +72,16 @@ class Register extends React.Component {
             id="passwordC"
             name="passwordC"
             label="Confirm Password:"
-            value={this.state.passwordC}
-            handleChange={this.hundleChange}
+            value={passwordC}
+            handleChange={hundleChange}
             required
           />
-          <Button type="submit" onClick={this.hundleSubmit}>Register</Button>
+          <Button type="submit" onClick={hundleSubmit}>Register</Button>
         </form>
       </ContainerComponent>
     );
   }
-}
-
-export default Register;
+const mapDispatchToProps = dispatch => ({
+  signUpStart : (credentials) => dispatch(SignUpStart(credentials))
+})
+export default connect(null,mapDispatchToProps)(Register);

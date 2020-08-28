@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { selectCartItems } from "../Redux/cart/cartSelector";
 import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
-import { TOGGLE_HIDE } from "../Redux/cart/cartAction";
+import { toggleCartHidden } from "../Redux/cart/cartAction";
 const CartDropDown = ({ cartItems, history, dispatch }) => {
   return (
     <CartDropdownContainer>
@@ -26,7 +26,7 @@ const CartDropDown = ({ cartItems, history, dispatch }) => {
       <ButtonContainer
         onClick={() => {
           history.push("/checkOut");
-          dispatch(TOGGLE_HIDE());
+          dispatch(toggleCartHidden());
         }}
       >
         GO TO CHECKOUT
