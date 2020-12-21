@@ -1,25 +1,17 @@
 import React from "react";
-import StripeCheckout from "react-stripe-checkout";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe("pk_test_ruBq7Og1icsNvtrN8ZHlDHES00wXMJx7FK");
 
 const Stripe = ({ price }) => {
-  const publicKey = "pk_test_ruBq7Og1icsNvtrN8ZHlDHES00wXMJx7FK";
   const priceStripe = price * 100;
-  const onToken = (token) => {
-    console.log(token);
-    alert("Your payment is successful");
-  };
+  console.log("price", priceStripe);
   return (
-    <StripeCheckout
-      label="Pay Now"
-      name="react-ecommerce"
-      billingAddress
-      shippingAddress
-      description={`Your total is ${price}`}
-      amount={priceStripe}
-      panelLabel="Pay Now"
-      token={onToken}
-      stripeKey={publicKey}
-    />
+    <Elements stripe={stripePromise}>
+      <CheckoutForm priceStripe={priceStripe} />
+    </Elements>
   );
 };
 export default Stripe;

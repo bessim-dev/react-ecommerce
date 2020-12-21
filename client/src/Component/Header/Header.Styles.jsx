@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const optioncontainer = css`
   padding: 10px 15px;
@@ -19,11 +19,18 @@ export const OptionsContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   font-size: 1.8rem;
+  @media screen and (max-width : 800px){
+    width:80%;
+}
 `;
 export const LogoContainer = styled(Link)`
   height: 100%;
   width: 70px;
   padding: 25px;
+  @media screen and (max-width : 800px){
+    width:50px;
+    padding:10px;
+}
 `;
 export const OptionLink = styled(Link)`
   ${optioncontainer}

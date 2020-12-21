@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const CheckoutPageContainer = styled.div`
   width: 55%;
@@ -6,6 +6,7 @@ export const CheckoutPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
   margin: 50px auto 0;
   button {
     margin-left: auto;
@@ -40,4 +41,11 @@ export const WarningContainer = styled.div`
   margin-top: 40px;
   font-size: 24px;
   color: red;
+`;
+export const PaymentButtonContainer = styled.button`
+  padding: 1rem;
+  text-align: center;
+  margin: auto;
+  font-size: 24px;
+  margin-top: 40px;
 `;
