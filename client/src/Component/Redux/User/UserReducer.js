@@ -2,9 +2,15 @@ import UserTypes from "./UserTypes";
 const INITIAL_STATE = {
   currentUser: null,
   error: null,
+  userDropDownHidden: true,
 };
 const UserReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case UserTypes.TOGGLE_USER_DROPDOWN:
+      return {
+        ...state,
+        userDropDownHidden: !state.userDropDownHidden,
+      };
     case UserTypes.SIGN_IN_SUCCESS:
       return {
         ...state,

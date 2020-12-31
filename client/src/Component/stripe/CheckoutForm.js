@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
-
 import "./Stripe.css";
+import { connect } from "react-redux";
+import { paymentStart } from "../Redux/Stripe/Stripe.Actions";
 const CARD_ELEMENT_OPTIONS = {
   iconStyle: "solid",
   style: {
@@ -56,11 +56,12 @@ const Field = ({
     />
   </div>
 );
-const SubmitButton = ({ children, processing, error, disabled }) => (
+const SubmitButton = ({ children, processing, error, disabled, onClick }) => (
   <button
     className={`SubmitButton ${error ? "SubmitButtonError" : ""}`}
     type="submit"
     disabled={processing || disabled}
+    onClick={onClick}
   >
     {processing ? "Processing" : children}
   </button>
@@ -80,12 +81,16 @@ const ErrorMessage = ({ children }) => (
     {children}
   </div>
 );
-const CheckoutForm = ({ priceStripe, history }) => {
+const CheckoutForm = ({
+  priceStripe,
+  history,
+  success,
+  startPayment,
+  processing,
+}) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
-  const [cardComplete, setCardComplete] = useState(false);
   const [billingDetails, setBillingDetails] = useState({
     name: "",
     email: "",
@@ -97,34 +102,21 @@ const CheckoutForm = ({ priceStripe, history }) => {
     if (!stripe || !elements) {
       return;
     }
-
-    if (cardComplete) {
-      setProcessing(true);
-    }
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
       billing_details: billingDetails,
     });
-    if (error) {
-      setError(error);
-    } else {
-      axios({
-        url: "payment",
-        method: "post",
-        data: {
-          amount: priceStripe,
-          paymentMethod: paymentMethod,
-        },
-      })
-        .then((res) => {
-          setProcessing(false);
-          alert("Your payment was successful");
-          history.push("/");
-        })
-        .catch((error) => console.log("payment error", error));
+    if (paymentMethod.id) {
+      const paymentMethodId = paymentMethod.id;
+      const data = { priceStripe, paymentMethodId };
+      startPayment(data);
     }
   };
+  if (success) {
+    alert("Your payment was successful");
+    history.push("/");
+  }
   return (
     <form className="Form" onSubmit={handleSubmit}>
       <fieldset className="FormGroup">
@@ -169,7 +161,6 @@ const CheckoutForm = ({ priceStripe, history }) => {
         <CardField
           onChange={(e) => {
             setError(e.error);
-            setCardComplete(e.complete);
           }}
         />
       </fieldset>
@@ -180,4 +171,14 @@ const CheckoutForm = ({ priceStripe, history }) => {
     </form>
   );
 };
-export default withRouter(CheckoutForm);
+const mapStateToProps = (state) => ({
+  success: state.stripe.success,
+  processing: state.stripe.processing,
+});
+const mapDispatchToProps = (dispatch) => ({
+  startPayment: (data) => dispatch(paymentStart(data)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CheckoutForm));

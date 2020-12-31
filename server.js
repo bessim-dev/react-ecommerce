@@ -22,10 +22,10 @@ if (process.env.NODE_ENV === "production") {
 
 app.post("/payment", async (req, res) => {
   const body = {
-    amount: req.body.amount,
+    amount: req.body.amount.priceStripe,
     currency: "usd",
     payment_method_types: ["card"],
-    payment_method: req.body.paymentMethod.id,
+    payment_method: req.body.amount.paymentMethodId,
     confirm: true,
   };
   try {

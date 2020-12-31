@@ -7,7 +7,6 @@ const stripePromise = loadStripe("pk_test_ruBq7Og1icsNvtrN8ZHlDHES00wXMJx7FK");
 
 const Stripe = ({ price }) => {
   const priceStripe = price * 100;
-  console.log("price", priceStripe);
   return (
     <Elements stripe={stripePromise}>
       <CheckoutForm priceStripe={priceStripe} />

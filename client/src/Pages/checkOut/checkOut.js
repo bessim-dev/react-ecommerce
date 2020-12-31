@@ -21,7 +21,6 @@ import Modal from "../../Component/stripe/Modal";
 
 const CheckOut = ({ cartTotal, cartItems }) => {
   const [showModal, invert] = useState(false);
-  console.log(showModal);
   return (
     <>
       <Modal showModal={showModal} />

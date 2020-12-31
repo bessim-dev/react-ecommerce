@@ -1,4 +1,7 @@
 import UserTypes from "./UserTypes";
+export const toggleUserDropDown = () => ({
+  type: UserTypes.TOGGLE_USER_DROPDOWN,
+});
 export const setCurrentUser = (user) => ({
   type: "SET_CURRENT_USER",
   payload: user,
@@ -33,14 +36,14 @@ export const SignOutFailure = (error) => ({
   payload: error,
 });
 export const SignUpStart = (credentials) => ({
-  type:UserTypes.SIGN_UP_START,
-  payload:credentials
-})
-export const SignUpSuccess = ({user, additionalData}) => ({
-  type:UserTypes.SIGN_UP_SUCCESS,
-  payload:{user, additionalData},
-})
+  type: UserTypes.SIGN_UP_START,
+  payload: credentials,
+});
+export const SignUpSuccess = ({ user, additionalData }) => ({
+  type: UserTypes.SIGN_UP_SUCCESS,
+  payload: { user, additionalData },
+});
 export const SignUpFailure = (e) => ({
-  type:UserTypes.SIGN_UP_FAILURE,
-  payload:e
-})
+  type: UserTypes.SIGN_UP_FAILURE,
+  payload: e,
+});
