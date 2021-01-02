@@ -4,7 +4,6 @@ export const UserIconContainer = styled.div`
   margin-top: 8px;
   margin-right: 10px;
   height: 60px;
-  width: 250px;
   display: flex;
   align-items: center;
 `;

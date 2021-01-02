@@ -1,24 +1,41 @@
 import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
 
-export const SearchContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  background: #2f3640;
-  height: 40px;
+export const SearchContainer = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #626767;
+  height: 50px;
+  width: 50px;
   border-radius: 40px;
-  padding: 10px;
+  cursor: pointer;
+  will-change: width;
 `;
-export const searchButtonContainer = styled.div`
+export const SearchButtonContainer = styled(motion.button)`
   border: none;
   background: none;
   outline: none;
-  float: left;
+  padding: 0;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  text-align: center;
+  will-change: scale;
+  border-radius: 50%;
+`;
+export const SearchInputContainer = styled(motion.input)`
+  border: none;
+  margin-left: 1em;
+  background: none;
+  outline: none;
   padding: 0;
   color: white;
-  font-size: 16px;
-  transition: 0.4s;
-  line-height: 40px;
-  width: 0px;
+  font-size: 25px;
+`;
+export const Icon = styled(motion.svg)`
+  flex: none;
+  fill: none;
+  width: 35px;
+  height: 35px;
 `;

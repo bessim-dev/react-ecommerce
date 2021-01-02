@@ -23,6 +23,7 @@ import { createStructuredSelector } from "reselect";
 
 import UserIcon from "../userIcon/userIcon";
 import Button from "../Button/Button";
+import Search from "../Search/Search";
 const Header = ({ currentUser, Hidden, signOutStart, userDropDownHidden }) => {
   return (
     <HeaderContainer>
@@ -32,6 +33,7 @@ const Header = ({ currentUser, Hidden, signOutStart, userDropDownHidden }) => {
         </LogoContainer>
         <OptionsContainer>
           <OptionLink to="/shop">Shop</OptionLink>
+          <Search />
         </OptionsContainer>
       </LeftSide>
       <OptionsContainer>
