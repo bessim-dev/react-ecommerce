@@ -2,6 +2,10 @@ import UserTypes from "./UserTypes";
 export const toggleUserDropDown = () => ({
   type: UserTypes.TOGGLE_USER_DROPDOWN,
 });
+export const disableUserDropDown = () => ({
+  type: UserTypes.DISABLE_USER_DROPDOWN,
+});
+
 export const setCurrentUser = (user) => ({
   type: "SET_CURRENT_USER",
   payload: user,

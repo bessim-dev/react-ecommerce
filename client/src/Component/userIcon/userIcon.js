@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 import {
   UserPhotoContainer,
@@ -9,9 +9,15 @@ import {
 } from "./userIcon.style";
 import { selectCurrentUser } from "../Redux/User/userSelector";
 import { createStructuredSelector } from "reselect";
-import { SignOutStart } from "../Redux/User/UserAction";
-import { toggleUserDropDown } from "../Redux/User/UserAction";
-const UserIcon = ({ currentUser, signOutStart, toggleUserDropDown }) => {
+import {
+  toggleUserDropDown,
+  disableUserDropDown,
+} from "../Redux/User/UserAction";
+import OutsideClickEvent from "../OutsideClickEvent/OutsideClickEvent";
+const UserIcon = ({ currentUser, toggleUserDropDown, disableUserDropDown }) => {
+  const ref = useRef();
+  OutsideClickEvent(ref, disableUserDropDown);
+
   if (currentUser) {
     return (
       <UserIconContainer>
@@ -24,7 +30,7 @@ const UserIcon = ({ currentUser, signOutStart, toggleUserDropDown }) => {
         </UserPhotoContainer>
         <UserNameContainer>
           <Name>{currentUser.displayName}</Name>
-          <ButtonContainer onClick={toggleUserDropDown}>
+          <ButtonContainer onClick={toggleUserDropDown} ref={ref}>
             <svg
               width="45"
               height="22"
@@ -61,7 +67,7 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 const mapDispatchToProps = (dispatch) => ({
-  signOutStart: () => dispatch(SignOutStart()),
   toggleUserDropDown: () => dispatch(toggleUserDropDown()),
+  disableUserDropDown: () => dispatch(disableUserDropDown()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(UserIcon);

@@ -11,6 +11,11 @@ const UserReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userDropDownHidden: !state.userDropDownHidden,
       };
+    case UserTypes.DISABLE_USER_DROPDOWN:
+      return {
+        ...state,
+        userDropDownHidden: true,
+      };
     case UserTypes.SIGN_IN_SUCCESS:
       return {
         ...state,

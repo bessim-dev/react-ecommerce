@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   SearchContainer,
@@ -6,6 +6,7 @@ import {
   SearchInputContainer,
   Icon,
 } from "./Search.style";
+import OutsideClickEvent from "../OutsideClickEvent/OutsideClickEvent";
 const searchInputVariants = {
   initial: { width: "0", display: "none" },
   final: { width: "200px", display: "block" },
@@ -16,12 +17,15 @@ const SearchContainerVariants = {
   final: { width: "300px" },
 };
 const Search = () => {
-  const [clicked, setClicked] = React.useState(false);
+  const [clicked, setClicked] = useState(false);
+  const ref = useRef();
+  OutsideClickEvent(ref, () => setClicked(false));
   return (
     <SearchContainer
       variants={SearchContainerVariants}
       initial={clicked ? "final" : "initial"}
       animate={clicked ? "final" : "initial"}
+      ref={ref}
     >
       <SearchInputContainer
         type="text"
