@@ -16,7 +16,7 @@ const SearchContainerVariants = {
   initial: { width: "50px" },
   final: { width: "300px" },
 };
-const Search = () => {
+const SearchUI = () => {
   const [clicked, setClicked] = useState(false);
   const ref = useRef();
   OutsideClickEvent(ref, () => setClicked(false));
@@ -30,7 +30,7 @@ const Search = () => {
       <SearchInputContainer
         type="text"
         name=""
-        placeHolder="Search"
+        placeHolder="Search..."
         variants={searchInputVariants}
         initial={clicked ? "final" : "initial"}
         animate={clicked ? "final" : "initial"}
@@ -39,19 +39,19 @@ const Search = () => {
         whileHover={{ scale: 0.8, rotate: 360 }}
         onClick={() => setClicked(!clicked)}
       >
-        <Icon width="47" height="48" viewBox="0 0 47 48">
-          <circle cx="29.5" cy="17.5" r="15" stroke="black" strokeWidth="5" />
+        <Icon width="44" height="44" viewBox="0 0 44 44">
+          <circle cx="26.5" cy="17.5" r="14" stroke="black" stroke-width="7" />
           <line
-            x1="19.7678"
-            y1="27.7678"
-            x2="1.76777"
-            y2="45.7678"
+            x1="16.7218"
+            y1="27.9312"
+            x2="2.7218"
+            y2="40.9312"
             stroke="black"
-            strokeWidth="5"
+            stroke-width="8"
           />
         </Icon>
       </SearchButtonContainer>
     </SearchContainer>
   );
 };
-export default Search;
+export default SearchUI;

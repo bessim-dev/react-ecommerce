@@ -13,6 +13,7 @@ import { selectCurrentUser } from "./Component/Redux/User/userSelector";
 import { createStructuredSelector } from "reselect";
 import { CheckUserSession } from "./Component/Redux/User/UserAction";
 import { GlobalStyle } from "./Global.styles";
+import Contact from "./Component/Contact/Contact";
 const App = ({ CheckUserSession, currentUser }) => {
   useEffect(() => {
     CheckUserSession();
@@ -31,6 +32,7 @@ const App = ({ CheckUserSession, currentUser }) => {
         />
         <Route exact path="/checkOut" component={CheckOut} />
       </Switch>
+      <Contact />
     </>
   );
 };

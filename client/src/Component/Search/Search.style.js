@@ -32,6 +32,9 @@ export const SearchInputContainer = styled(motion.input)`
   padding: 0;
   color: white;
   font-size: 25px;
+  ::placeholder {
+    color: white;
+  }
 `;
 export const Icon = styled(motion.svg)`
   flex: none;
