@@ -42,3 +42,27 @@ export const Icon = styled(motion.svg)`
   width: 35px;
   height: 35px;
 `;
+export const SearchDropdown = styled(motion.ul)`
+  position: absolute;
+  z-index: 5;
+  top: 65px;
+  left: 240px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 2px;
+  border: 1px solid black;
+`;
+export const SearchDropdownRow = styled(motion.li)`
+  background-color: rgba(214, 214, 214, 0.5);
+  padding: 2px;
+  margin-bottom: 4px;
+  font-size: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  list-style: none;
+  &:last-child {
+    margin-bottom: 0px;
+  }
+`;
