@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const optioncontainer = css`
   padding: 10px 15px;
+  font-size:2em;
   cursor: pointer;
 `;
 
@@ -26,7 +27,6 @@ export const OptionsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  font-size: 1.8rem;
   @media screen and (max-width : 800px){
     width:80%;
 }

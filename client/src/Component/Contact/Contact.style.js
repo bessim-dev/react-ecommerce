@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 import {
   Facebook,
@@ -7,11 +7,27 @@ import {
   Twitter,
 } from "@styled-icons/boxicons-logos";
 
-export const ContactContainer = styled.div`
+export const ContactContainer = styled(motion.div)`
+  z-index: 10;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 2em;
+  height: 400px;
+  position: fixed;
+  top: 50%;
+  margin-top: -200px;
+  margin-left: -100px;
+  @media screen and (max-width: 800px) {
+    flex-direction: row;
+    align-items: center;
+    height: unset;
+    position: unset;
+    top: unset;
+    margin-top: 0;
+    margin-left: 0;
+  }
 `;
 
 export const LinkContainer = styled(motion.a)`

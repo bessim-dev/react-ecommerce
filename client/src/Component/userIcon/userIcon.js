@@ -24,7 +24,7 @@ const UserIcon = ({ currentUser, toggleUserDropDown, disableUserDropDown }) => {
         <UserPhotoContainer>
           <img
             src={currentUser.photoURL}
-            alt="user photo"
+            alt="user"
             style={{ width: "100%", height: "100%" }}
           />
         </UserPhotoContainer>

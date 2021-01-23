@@ -15,40 +15,34 @@ import {
   GithubText,
   FacebookIcon,
 } from "./Contact.style";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 const Contact = () => {
+  const mediaBool = window.matchMedia("(min-width: 800px)").matches;
+  const anim = mediaBool ? { width: "200px" } : {};
   return (
-    <ContactContainer>
+    <ContactContainer mediaBool>
       <LinkContainer
         href="https://www.facebook.com/bessim.boujebli.927/"
-        whileHover={{ width: "200px" }}
+        whileHover={anim}
       >
         <FacebookIconContainer>
           <FacebookIcon />
         </FacebookIconContainer>
         <FacebookText>Facebook</FacebookText>
       </LinkContainer>
-      <LinkContainer
-        href="https://github.com/bessim-dev"
-        whileHover={{ width: "200px" }}
-      >
+      <LinkContainer href="https://github.com/bessim-dev" whileHover={anim}>
         <GithubIconContainer>
           <GithubIcon />
         </GithubIconContainer>
         <GithubText>Github</GithubText>
       </LinkContainer>
-      <LinkContainer
-        whileHover={{ width: "200px" }}
-        href="https://linkedin.com"
-      >
+      <LinkContainer whileHover={anim} href="https://linkedin.com">
         <LinkedInIconContainer>
           <LinkedInIcon />
         </LinkedInIconContainer>
         <LinkedInText>LinkedIN</LinkedInText>
       </LinkContainer>
       <LinkContainer
-        whileHover={{ width: "200px" }}
+        whileHover={anim}
         href="https://twitter.com/Shining96406619"
       >
         <TwitterIconContainer>

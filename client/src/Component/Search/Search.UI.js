@@ -2,65 +2,81 @@ import React, { useRef, useState } from "react";
 import { AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectCollectionForPreview } from "../Redux/shop/shopSelector";
-
+import {
+  selectCollectionForPreview,
+  selectCollectionNamesForSearch,
+} from "../Redux/shop/shopSelector";
+import { fetchCollectionStart } from "../Redux/shop/shopActions";
 import {
   SearchContainer,
   SearchButtonContainer,
   SearchInputContainer,
-  Icon,
+  SearchIcon,
   SearchDropdown,
   SearchDropdownRow,
 } from "./Search.style";
 import OutsideClickEvent from "../OutsideClickEvent/OutsideClickEvent";
+import { useHistory } from "react-router-dom";
 const searchInputVariants = {
   initial: { width: "0", display: "none" },
   final: { width: "200px", display: "block" },
   transition: {},
 };
-const SearchContainerVariants = {
-  initial: { width: "50px" },
-  final: { width: "300px" },
+const findFirst = (query, array) => {
+  let arr = [];
+  for (let j = 0; j < array.length; j++) {
+    for (let i = 0; i < array[j].itemsName.length; i++) {
+      if (array[j].itemsName[i] === query) {
+        return { id: i, routeName: array[j].routeName };
+      }
+    }
+  }
+  return array.forEach(() => {});
 };
-
-const SearchUI = ({ SHOP_DATA }) => {
-  const data = SHOP_DATA
-    ? SHOP_DATA.map((array) => ({
-        routeName: array.routeName,
-        itemsName: array.items.map((el) => el.name),
-      }))
-    : [];
-  console.log("shop", data);
-
+const SearchUI = ({ fetchCollectionStart, data, SHOP_DATA }) => {
+  let history = useHistory();
   const [clicked, setClicked] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [inputValue, setInputValue] = useState("");
   const ref = useRef();
   OutsideClickEvent(ref, () => setClicked(false));
-  console.log(suggestions);
+  //fetchData
+  if (clicked && !data.length) {
+    fetchCollectionStart();
+  }
   const search = (query, array) => {
-    const finalList = [];
+    let finalList = [];
     let filteredList = [];
     if (query) {
       array.forEach(({ itemsName }) => {
         filteredList = itemsName.filter(
           (e) => e.toLowerCase().indexOf(query.toLowerCase()) !== -1
         );
+
         if (filteredList.length > 0) {
           finalList.push(filteredList);
         }
       });
-      return finalList.flat();
+      return finalList.flat().slice(0, 10);
     } else {
       return [];
     }
   };
-  const hundleClickSugg = (sugg) => {
-    const index = SHOP_DATA.forEach((el) => el.map((obj) => obj.find()));
+
+  const hundleClickSugg = (value) => {
+    setInputValue(value);
+    setSuggestions([]);
+    const { id, routeName } = findFirst(value, data);
+    history.push(`/shop/${routeName}`);
+    setInputValue("");
   };
   const onTextChange = (e) => {
     const value = e.target.value;
-    if (SHOP_DATA) {
+    if (data.length > 0) {
       setSuggestions(search(value, data));
+      setInputValue(value);
+    } else {
+      fetchCollectionStart();
     }
   };
   const renderSuggestionsList = () => {
@@ -76,10 +92,16 @@ const SearchUI = ({ SHOP_DATA }) => {
                 exit={{ opacity: 0 }}
               >
                 {suggestions.map((suggestion) => (
-                  <SearchDropdownRow key={suggestion}>
+                  <SearchDropdownRow
+                    key={suggestion}
+                    onClick={() => hundleClickSugg(suggestion)}
+                  >
                     {suggestion}
                   </SearchDropdownRow>
                 ))}
+                <SearchDropdownRow onClick={() => history.push("/shop")}>
+                  ...
+                </SearchDropdownRow>
               </SearchDropdown>
             )}
           </AnimatePresence>
@@ -91,42 +113,29 @@ const SearchUI = ({ SHOP_DATA }) => {
 
   return (
     <>
-      <SearchContainer
-        variants={SearchContainerVariants}
-        initial={clicked ? "final" : "initial"}
-        animate={clicked ? "final" : "initial"}
-        ref={ref}
-      >
+      <SearchContainer ref={ref}>
         <SearchInputContainer
           onChange={(e) => onTextChange(e)}
           placeholder="Search..."
+          value={inputValue}
           variants={searchInputVariants}
           initial={clicked ? "final" : "initial"}
           animate={clicked ? "final" : "initial"}
         />
-        <SearchButtonContainer
-          whileHover={{ scale: 0.8, rotate: 360 }}
-          onClick={() => setClicked(!clicked)}
-        >
-          <Icon width="44" height="44" viewBox="0 0 44 44">
-            <circle cx="26.5" cy="17.5" r="14" stroke="black" strokeWidth="7" />
-            <line
-              x1="16.7218"
-              y1="27.9312"
-              x2="2.7218"
-              y2="40.9312"
-              stroke="black"
-              strokeWidth="8"
-            />
-          </Icon>
+        <SearchButtonContainer onClick={() => setClicked(!clicked)}>
+          <SearchIcon />
         </SearchButtonContainer>
+        {renderSuggestionsList()}
       </SearchContainer>
-      {renderSuggestionsList()}
     </>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
   SHOP_DATA: selectCollectionForPreview,
+  data: selectCollectionNamesForSearch,
 });
-export default connect(mapStateToProps)(SearchUI);
+const dispatchStateToProps = (dispatch) => ({
+  fetchCollectionStart: () => dispatch(fetchCollectionStart()),
+});
+export default connect(mapStateToProps, dispatchStateToProps)(SearchUI);

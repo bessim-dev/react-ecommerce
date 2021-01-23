@@ -10,6 +10,16 @@ export const selectCollectionForPreview = createSelector(
   (collections) =>
     collections ? Object.keys(collections).map((key) => collections[key]) : []
 );
+export const selectCollectionNamesForSearch = createSelector(
+  [selectCollectionForPreview],
+  (collections) =>
+    collections
+      ? collections.map((array) => ({
+          routeName: array.routeName,
+          itemsName: array.items.map((el) => el.name),
+        }))
+      : []
+);
 export const selectCollection = (collectionUrlParam) =>
   createSelector([selectShopData], (collections) =>
     collections ? collections[collectionUrlParam] : null

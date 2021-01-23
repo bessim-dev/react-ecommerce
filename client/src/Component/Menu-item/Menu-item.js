@@ -14,10 +14,10 @@ const MenuItem = ({ title, imageUrl, size, history, match, linkUrl }) => {
       onClick={() => history.push(`${match.url}${linkUrl}`)}
     >
       <BackgroundImgComponent
-      className='background-image'
-      imageUrl={imageUrl}
+        className="background-image"
+        imageUrl={imageUrl}
       />
-      <ContentComponent className='content'>
+      <ContentComponent className="content">
         <TitleComponent>{title.toUpperCase()}</TitleComponent>
         <SubtitleComponent>Shop Now</SubtitleComponent>
       </ContentComponent>

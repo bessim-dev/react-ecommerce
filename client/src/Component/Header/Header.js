@@ -31,10 +31,8 @@ const Header = ({ currentUser, Hidden, signOutStart, userDropDownHidden }) => {
         <LogoContainer to="/">
           <Logo className="logo" />
         </LogoContainer>
-        <OptionsContainer>
-          <OptionLink to="/shop">Shop</OptionLink>
-          <SearchUI />
-        </OptionsContainer>
+        <OptionLink to="/shop">Shop</OptionLink>
+        <SearchUI />
       </LeftSide>
       <OptionsContainer>
         {currentUser ? (
